@@ -5,10 +5,16 @@ import { ToastContainer } from "react-toastify";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import "react-toastify/dist/ReactToastify.css";
+import { Route } from "react-router-dom";
+import createHistory from "history/createBrowserHistory";
 import Header from "./components/Header";
 import Wrapper from "./components/Wrapper";
-import NowWhat from "./components/NowWhat";
+import Navigation from "./components/Navigation";
+import Router from "./Router";
 
+import { ConnectedRouter } from 'react-router-redux';
+
+const history = createHistory();
 const store = createStore();
 const theme = createMuiTheme({
   typography: {
@@ -27,15 +33,19 @@ const theme = createMuiTheme({
   }
 });
 
+
 const App = props => (
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
     <Provider store={store}>
-      <Wrapper>
-        <Header />
-        <NowWhat />
-        <ToastContainer />
-      </Wrapper>
+      <ConnectedRouter history={history}>
+        <Wrapper>
+          <Navigation />
+          <Header />
+          <Route component={Router} />
+          <ToastContainer />
+        </Wrapper>
+      </ConnectedRouter>
     </Provider>
   </MuiThemeProvider>
 );

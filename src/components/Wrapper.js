@@ -4,7 +4,9 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = theme => ({
   wrapper: {
     background: theme.palette.background.main,
-    height: "100vh"
+    height: "100vh",
+    width: "calc(100% - 150px)",
+    marginLeft: "150px"
   }
 });
 
