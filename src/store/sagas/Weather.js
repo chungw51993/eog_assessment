@@ -18,18 +18,22 @@ import * as actions from "../actions";
 */
 
 function* watchWeatherIdReceived(action) {
-  const { id } = action;
+  const { id, drone } = action;
   const { error, data } = yield call(API.findWeatherbyId, id);
   if (error) {
     yield put({ type: actions.API_ERROR, code: error.code });
     yield cancel();
     return;
   }
-  yield put({ type: actions.WEATHER_DATA_RECEIVED, data });
+  if (drone) {
+    yield put({ type: actions.DRONE_WEATHER_DATA_RECEIVED, data });
+  } else {
+    yield put({ type: actions.WEATHER_DATA_RECEIVED, data });
+  }
 }
 
 function* watchFetchWeather(action) {
-  const { latitude, longitude } = action;
+  const { latitude, longitude, drone } = action;
   const { error, data } = yield call(
     API.findLocationByLatLng,
     latitude,
@@ -47,7 +51,7 @@ function* watchFetchWeather(action) {
     yield cancel();
     return;
   }
-  yield put({ type: actions.WEATHER_ID_RECEIVED, id: location });
+  yield put({ type: actions.WEATHER_ID_RECEIVED, id: location, drone });
 }
 
 function* watchAppLoad() {

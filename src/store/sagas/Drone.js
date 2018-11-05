@@ -3,12 +3,12 @@ import API from "../api";
 import * as actions from "../actions";
 
 function* watchFetchDrone(action) {
-  const { error, data } = yield call(
+  const { error1, data: { data } } = yield call(
     API.findDrone
   );
-  if (error) {
-    console.log({ error });
-    yield put({ type: actions.API_ERROR, code: error.code });
+  if (error1) {
+    console.log({ error1 });
+    yield put({ type: actions.API_ERROR, code: error1.code });
     yield cancel();
     return;
   }

@@ -14,6 +14,9 @@ const initialState = {
 const toF = c => (c * 9) / 5 + 32;
 
 const startLoading = (state, action) => {
+  if (action.drone) {
+    return state;
+  }
   return { ...state, loading: true };
 };
 
@@ -28,7 +31,6 @@ const weatherDataRecevied = (state, action) => {
   const { weather_state_name, the_temp } = weather;
   const { latt_long, title: name } = data;
   const [latitude, longitude] = latt_long.split(",");
-
   return {
     ...state,
     loading: false,

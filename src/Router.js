@@ -3,12 +3,13 @@ import { Switch, Route } from 'react-router-dom';
 import { withStyles } from "@material-ui/core/styles";
 import Dashboard from "./components/Dashboard";
 import MapVisual from "./components/MapVisual";
+import ChartVisual from "./components/ChartVisual";
 import DroneContainer from "./store/container/DroneContainer";
 
 const styles = theme => ({
   app: {
     display: "flex",
-    height: "100%",
+    height: "calc(100% - 64px)",
     alignItems: "center",
     justifyContent: "center"
   }
@@ -17,15 +18,25 @@ const styles = theme => ({
 class Router extends Component {
   componentWillMount() {
     this.props.onLoad();
+    setInterval(this.props.onLoad, 3000);
   }
+
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loading) {
-      setInterval(this.props.nextDrone, 3000);
+    const { drones: cDrones, currentDrone: currDrone } = this.props;
+    const { drones, currentDrone } = nextProps;
+    if (drones[currentDrone]) {
+      if (!cDrones[currDrone] && drones[currentDrone]) {
+        this.props.loadWeather(drones[currentDrone].latitude, drones[currentDrone].longitude);
+      } else if (drones[currentDrone].latitude !== cDrones[currDrone].latitude ||
+      drones[currentDrone].longitude !== cDrones[currDrone].longitude) {
+      }
     }
   }
+
   componentWillUnmount() {
-    clearInterval(this.props.nextDrone);
+    clearInterval(this.props.onLoad);
   }
+
   render() {
     const { classes } = this.props;
     return (
@@ -33,6 +44,7 @@ class Router extends Component {
         <Switch>
           <Route exact path="/" component={Dashboard} />
           <Route exact path="/map" component={MapVisual} />
+          <Route exact path="/chart" component={ChartVisual} />
         </Switch>
       </div>
     );

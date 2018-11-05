@@ -24,31 +24,53 @@ const styles = {
     height: "80%"
   },
   progress: {
-    width: "100%"
+    width: "90%"
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    width: "60%",
+    margin: "0 auto",
+    height: "calc(100% - 63px)",
+    justifyContent: "space-evenly"
+  },
+  text: {
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: "25px"
   }
 }
 
 class Dashboard extends Component {
   render() {
-    const { loading, drones, currentDrone, classes } = this.props;
-    // if (loading) {
-    //   return <LinearProgress className={classes.progress}/>;
-    // }
+    const { loading, drones, currentDrone, classes, weather } = this.props;
+    if (loading || !weather) {
+      return <LinearProgress className={classes.progress}/>;
+    }
     return (
       <Card className={classes.card}>
         <CardHeader title="Dashboard"/>
-        <CardContent>
-          <Typography align="justify">
-            Temperature: 100
+        <CardContent className={classes.content}>
+          <Typography className={classes.text}>
+            <span>City: </span><span>{ weather.name }</span>
           </Typography>
-          <Typography align="justify">
-            Latitude:
+          <Typography className={classes.text}>
+            <span>Temperature: </span><span>{ Math.round(weather.temperatureinFahrenheit) }°F</span>
           </Typography>
-          <Typography align="justify">
-            Longitude:
+          <Typography className={classes.text}>
+            <span>Forecast: </span><span>{ weather.weather_state_name }</span>
           </Typography>
-          <Typography align="justify">
-            Last Received:
+          <Typography className={classes.text}>
+            <span>Metric: </span><span>{ drones[currentDrone].metric }</span>
+          </Typography>
+          <Typography className={classes.text}>
+            <span>Latitude: </span><span>{ drones[currentDrone].latitude }</span>
+          </Typography>
+          <Typography className={classes.text}>
+            <span>Longitude: </span><span>{ drones[currentDrone].longitude }</span>
+          </Typography>
+          <Typography className={classes.text}>
+            <span>Last Received: </span><span>{ moment(drones[currentDrone].timestamp).fromNow() }</span>
           </Typography>
         </CardContent>
       </Card>

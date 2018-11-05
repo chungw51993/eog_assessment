@@ -6,10 +6,16 @@ const mapState = (state, ownProps) => {
   const {
     loading,
     drones,
+    currentDrone,
+    interval,
+    weather
   } = state.drone;
   return {
     loading,
     drones,
+    currentDrone,
+    interval,
+    weather
   };
 };
 
@@ -18,9 +24,12 @@ const mapDispatch = dispatch => ({
     dispatch({
       type: actions.FETCH_DRONE
     }),
-  nextDrone: () =>
+  loadWeather: (lat, lng) =>
     dispatch({
-      type: actions.NEXT_DRONE
+      type: actions.FETCH_WEATHER,
+      longitude: lng,
+      latitude: lat,
+      drone: true
     })
 });
 
