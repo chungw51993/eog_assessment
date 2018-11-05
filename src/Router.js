@@ -29,6 +29,7 @@ class Router extends Component {
         this.props.loadWeather(drones[currentDrone].latitude, drones[currentDrone].longitude);
       } else if (drones[currentDrone].latitude !== cDrones[currDrone].latitude ||
       drones[currentDrone].longitude !== cDrones[currDrone].longitude) {
+        this.props.loadWeather(drones[currentDrone].latitude, drones[currentDrone].longitude);
       }
     }
   }

@@ -5,6 +5,7 @@ import CardHeaderRaw from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import { withStyles } from "@material-ui/core/styles";
 import DroneContainer from "../store/container/DroneContainer";
+import Chart from './Chart';
 
 const cardStyles = theme => ({
   root: {
@@ -21,6 +22,13 @@ const styles = {
     width: "80%",
     height: "80%"
   },
+  content: {
+    width: "100%",
+    height: "90%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
   progress: {
     width: "90%"
   }
@@ -35,7 +43,8 @@ class ChartVisual extends Component {
     return (
       <Card className={classes.card}>
         <CardHeader title="Chart Visualization"/>
-        <CardContent>
+        <CardContent className={classes.content}>
+          <Chart drones={drones}/>
         </CardContent>
       </Card>
     );
